@@ -1,4 +1,22 @@
 url: https://biosensu.github.io/fichaR/
+lang: pt
 template:
   bootstrap: 5
+  theme: "atom-one-dark"
+  bslib:
+    bg: "#0d161c"
+    fg: "#c1e5eb"
+    primary: "#5dbac0"
+    base_font: {google: "Public Sans"}
+
+navbar:
+  structure:
+    left: [intro, reference, articles, tutorials, news, ficharium]
+  components:
+    ficharium:
+      text: Ficharium Cloud
+      href: https://ficharium.cloud
+      target: _blank
+
+
 
