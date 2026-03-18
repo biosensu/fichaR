@@ -1,6 +1,6 @@
 # fichaR
 
-Cliente R para a API [Ficharium Cloud](https://ficharium.cloud). Permite
+Cliente R para o [Ficharium Cloud](https://ficharium.cloud). Permite
 autenticar, listar projetos, modelos e fichas de campo, e acessar listas
 de espécies consolidadas.
 
