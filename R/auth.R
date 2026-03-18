@@ -39,6 +39,30 @@ ficharium_definir_token <- function(token) {
   invisible(token)
 }
 
+#' Logout da API Ficharium
+#'
+#' @title Logout da API Ficharium
+#' @description Remove o token JWT da sessao atual e do \code{.Renviron}.
+#' @return invisivel
+#' @examples
+#' \dontrun{
+#' ficharium_logout()
+#' }
+#' @export
+ficharium_logout <- function() {
+  renviron <- file.path(Sys.getenv("HOME"), ".Renviron")
+
+  if (file.exists(renviron)) {
+    linhas <- readLines(renviron, warn = FALSE)
+    linhas <- linhas[!grepl("^FICHARIUM_TOKEN=", linhas)]
+    writeLines(linhas, renviron)
+  }
+
+  Sys.unsetenv("FICHARIUM_TOKEN")
+  message("Logout realizado com sucesso.")
+  invisible(NULL)
+}
+
 #' Login na API Ficharium
 #'
 #' @title Login na API Ficharium
