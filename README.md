@@ -84,6 +84,10 @@ FICHARIUM_TOKEN=seu_token_jwt
 FICHARIUM_BASE_URL=https://api.ficharium.cloud
 ```
 
+## Referência
+
+A documentação completa de cada função — parâmetros, tipos de retorno e exemplos — está disponível em [biosensu.github.io/fichaR/reference](https://biosensu.github.io/fichaR/reference).
+
 ## Licença
 
 MIT © Biosensu

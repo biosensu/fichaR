@@ -13,6 +13,9 @@ navbar:
   structure:
     left: [intro, reference, articles, tutorials, news, ficharium]
   components:
+    reference:
+      text: Referência
+      href: reference/index.html
     ficharium:
       text: Ficharium Cloud
       href: https://ficharium.cloud
