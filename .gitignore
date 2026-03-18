@@ -1,0 +1,8 @@
+.Renviron
+.env
+*.token
+.Rhistory
+.RData
+.Rproj.user
+.claude
+CLAUDE.md

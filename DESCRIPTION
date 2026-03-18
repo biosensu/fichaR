@@ -1,0 +1,17 @@
+Package: fichaR
+Title: Cliente R para a API Ficharium Cloud
+Version: 1.0.0
+Authors@R: 
+    person("Biosensu", , , "contato@biosensu.com", role = c("aut", "cre"))
+Description: Funcoes para autenticacao e acesso a projetos, fichas,
+    modelos e especies da plataforma Ficharium.
+License: MIT + file LICENSE
+Encoding: UTF-8
+Language: pt-BR
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.3
+Imports: 
+    askpass,
+    hms,
+    httr2,
+    tibble
