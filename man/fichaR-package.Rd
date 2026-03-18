@@ -13,4 +13,3 @@ modelos e especies da plataforma Ficharium.
 \strong{Maintainer}: Biosensu \email{contato@biosensu.com}
 
 }
-\keyword{internal}
