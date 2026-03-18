@@ -1,0 +1,128 @@
+# fichaR
+
+Cliente R para a API [Ficharium Cloud](https://ficharium.cloud). Permite
+autenticar, listar projetos, modelos e fichas de campo, e acessar listas
+de espécies consolidadas.
+
+## Instalação
+
+``` r
+# via remotes (recomendado)
+remotes::install_github("biosensu/fichaR")
+```
+
+## Autenticação
+
+O token JWT é armazenado no `.Renviron` e reutilizado entre sessões.
+
+``` r
+library(fichaR)
+
+# Login — abre prompt seguro de senha
+ficharium_login("seu@email.com")
+```
+
+## Projetos
+
+``` r
+# listar todos os projetos do usuário
+projetos <- listar_projetos()
+
+# detalhes de um projeto
+proj <- projeto(projetos$id[1])
+
+# modelos e fichas de um projeto
+modelos_projeto("proj_id")
+fichas_projeto("proj_id")
+```
+
+## Modelos e campos
+
+``` r
+# modelos do usuário
+modelos <- listar_modelos()
+
+# campos de um modelo (com tipos R mapeados)
+campos <- campos_modelo(modelos$id[1])
+```
+
+## Fichas de campo
+
+``` r
+# tibble com uma linha por observação
+fichas <- listar_fichas("proj_id", "modelo_id")
+
+# ficha específica (campos resolvidos para nomes)
+ficha("ficha_id")
+```
+
+### Expandindo campos complexos
+
+Campos de tipo `especie`, `coordenada` e `ponto` são retornados como
+list-columns. Use as funções auxiliares para expandi-los:
+
+``` r
+fichas |> expandir_especies("Espécie")
+fichas |> expandir_coordenadas("Coordenadas")
+fichas |> expandir_ponto("Ponto amostral")
+```
+
+## Espécies
+
+``` r
+# lista consolidada de espécies registradas no projeto
+especies <- listar_especies("proj_id")
+
+# com filtro por nome
+listar_especies("proj_id", busca = "Leopardus")
+```
+
+## Configuração avançada
+
+Defina no `.Renviron` para sobrescrever os padrões:
+
+    FICHARIUM_TOKEN=seu_token_jwt
+    FICHARIUM_BASE_URL=https://api.ficharium.cloud
+
+## Licença
+
+MIT © Biosensu
+
+# Package index
+
+## All functions
+
+- [`campos_modelo()`](https://biosensu.github.io/fichaR/reference/campos_modelo.md)
+  : Obter campos de um modelo
+- [`expandir_coordenadas()`](https://biosensu.github.io/fichaR/reference/expandir_coordenadas.md)
+  : Expandir list-column de coordenadas
+- [`expandir_especies()`](https://biosensu.github.io/fichaR/reference/expandir_especies.md)
+  : Expandir list-column de especies
+- [`expandir_ponto()`](https://biosensu.github.io/fichaR/reference/expandir_ponto.md)
+  : Expandir list-column de ponto
+- [`ficha()`](https://biosensu.github.io/fichaR/reference/ficha.md) :
+  Obter uma ficha especifica
+- [`fichaR`](https://biosensu.github.io/fichaR/reference/fichaR-package.md)
+  [`fichaR-package`](https://biosensu.github.io/fichaR/reference/fichaR-package.md)
+  : fichaR: Cliente R para a API Ficharium Cloud
+- [`ficharium_definir_token()`](https://biosensu.github.io/fichaR/reference/ficharium_definir_token.md)
+  : Definir token de autenticacao
+- [`ficharium_login()`](https://biosensu.github.io/fichaR/reference/ficharium_login.md)
+  : Login na API Ficharium
+- [`ficharium_token()`](https://biosensu.github.io/fichaR/reference/ficharium_token.md)
+  : Obter token de autenticacao
+- [`fichas_projeto()`](https://biosensu.github.io/fichaR/reference/fichas_projeto.md)
+  : Listar fichas de um projeto
+- [`listar_especies()`](https://biosensu.github.io/fichaR/reference/listar_especies.md)
+  : Listar especies registradas em um projeto
+- [`listar_fichas()`](https://biosensu.github.io/fichaR/reference/listar_fichas.md)
+  : Listar fichas de um modelo em um projeto
+- [`listar_modelos()`](https://biosensu.github.io/fichaR/reference/listar_modelos.md)
+  : Listar modelos do usuario
+- [`listar_projetos()`](https://biosensu.github.io/fichaR/reference/listar_projetos.md)
+  : Listar projetos do usuario
+- [`modelos_projeto()`](https://biosensu.github.io/fichaR/reference/modelos_projeto.md)
+  : Listar modelos de um projeto
+- [`projeto()`](https://biosensu.github.io/fichaR/reference/projeto.md)
+  : Obter um projeto especifico
+
