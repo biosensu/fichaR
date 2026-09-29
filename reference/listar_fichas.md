@@ -8,7 +8,7 @@ list-columns.
 ## Usage
 
 ``` r
-listar_fichas(projeto_id, modelo_id)
+listar_fichas(projeto_id, modelo_id, incluir_encontros = FALSE)
 ```
 
 ## Arguments
@@ -20,6 +20,12 @@ listar_fichas(projeto_id, modelo_id)
 - modelo_id:
 
   string com o ID do modelo
+
+- incluir_encontros:
+
+  logico; se `TRUE`, anexa os encontros ocasionais do projeto como
+  linhas extras (coluna `tipo_registro` distingue a origem). Padrao
+  `FALSE`.
 
 ## Value
 
@@ -35,5 +41,6 @@ Listar fichas de um modelo em um projeto
 ``` r
 if (FALSE) { # \dontrun{
 fichas <- listar_fichas("proj123", "modelo456")
+fichas <- listar_fichas("proj123", "modelo456", incluir_encontros = TRUE)
 } # }
 ```

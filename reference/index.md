@@ -4,6 +4,8 @@
 
 - [`campos_modelo()`](https://biosensu.github.io/fichaR/reference/campos_modelo.md)
   : Obter campos de um modelo
+- [`encontros_ocasionais()`](https://biosensu.github.io/fichaR/reference/encontros_ocasionais.md)
+  : Listar encontros ocasionais de um projeto
 - [`expandir_coordenadas()`](https://biosensu.github.io/fichaR/reference/expandir_coordenadas.md)
   : Expandir list-column de coordenadas
 - [`expandir_especies()`](https://biosensu.github.io/fichaR/reference/expandir_especies.md)

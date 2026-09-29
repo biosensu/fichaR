@@ -7,6 +7,7 @@ de espécies consolidadas.
 ## Instalação
 
 ``` r
+
 # via remotes (recomendado)
 remotes::install_github("biosensu/fichaR")
 ```
@@ -16,6 +17,7 @@ remotes::install_github("biosensu/fichaR")
 O token JWT é armazenado no `.Renviron` e reutilizado entre sessões.
 
 ``` r
+
 library(fichaR)
 
 # Login — abre prompt seguro de senha
@@ -25,6 +27,7 @@ ficharium_login("seu@email.com")
 ## Projetos
 
 ``` r
+
 # listar todos os projetos do usuário
 projetos <- listar_projetos()
 
@@ -39,6 +42,7 @@ fichas_projeto("proj_id")
 ## Modelos e campos
 
 ``` r
+
 # modelos do usuário
 modelos <- listar_modelos()
 
@@ -49,6 +53,7 @@ campos <- campos_modelo(modelos$id[1])
 ## Fichas de campo
 
 ``` r
+
 # tibble com uma linha por observação
 fichas <- listar_fichas("proj_id", "modelo_id")
 
@@ -62,6 +67,7 @@ Campos de tipo `especie`, `coordenada` e `ponto` são retornados como
 list-columns. Use as funções auxiliares para expandi-los:
 
 ``` r
+
 fichas |> expandir_especies("Espécie")
 fichas |> expandir_coordenadas("Coordenadas")
 fichas |> expandir_ponto("Ponto amostral")
@@ -70,6 +76,7 @@ fichas |> expandir_ponto("Ponto amostral")
 ## Espécies
 
 ``` r
+
 # lista consolidada de espécies registradas no projeto
 especies <- listar_especies("proj_id")
 
