@@ -4,12 +4,16 @@
 \alias{listar_fichas}
 \title{Listar fichas de um modelo em um projeto}
 \usage{
-listar_fichas(projeto_id, modelo_id)
+listar_fichas(projeto_id, modelo_id, incluir_encontros = FALSE)
 }
 \arguments{
 \item{projeto_id}{string com o ID do projeto}
 
 \item{modelo_id}{string com o ID do modelo}
+
+\item{incluir_encontros}{logico; se \code{TRUE}, anexa os encontros
+ocasionais do projeto como linhas extras (coluna \code{tipo_registro}
+distingue a origem). Padrao \code{FALSE}.}
 }
 \value{
 tibble onde cada linha e uma observacao (item de \code{dados}),
@@ -26,5 +30,6 @@ Listar fichas de um modelo em um projeto
 \examples{
 \dontrun{
 fichas <- listar_fichas("proj123", "modelo456")
+fichas <- listar_fichas("proj123", "modelo456", incluir_encontros = TRUE)
 }
 }

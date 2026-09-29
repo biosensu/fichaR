@@ -6,22 +6,36 @@
 #'   Campos complexos (especie, coordenada, ponto, lista) sao retornados como list-columns.
 #' @param projeto_id string com o ID do projeto
 #' @param modelo_id string com o ID do modelo
+#' @param incluir_encontros logico; se \code{TRUE}, anexa os encontros
+#'   ocasionais do projeto como linhas extras (coluna \code{tipo_registro}
+#'   distingue a origem). Padrao \code{FALSE}.
 #' @return tibble onde cada linha e uma observacao (item de \code{dados}),
 #'   com colunas de metadados da ficha mais os campos do modelo.
 #' @examples
 #' \dontrun{
 #' fichas <- listar_fichas("proj123", "modelo456")
+#' fichas <- listar_fichas("proj123", "modelo456", incluir_encontros = TRUE)
 #' }
+#' @importFrom dplyr bind_rows
 #' @export
-listar_fichas <- function(projeto_id, modelo_id) {
+listar_fichas <- function(projeto_id, modelo_id, incluir_encontros = FALSE) {
+  .talvez <- function(df) {
+    if (!isTRUE(incluir_encontros)) return(df)
+    encontros <- encontros_ocasionais(projeto_id)
+    if (nrow(encontros) == 0) return(df)
+    df$tipo_registro <- "Ficha"
+    encontros$tipo_registro <- "Encontro Ocasional"
+    dplyr::bind_rows(df, encontros)
+  }
+
   res <- .ficharium_erro(
     .ficharium_requisicao("GET", paste0("fichas/projeto/", projeto_id, "/modelo/", modelo_id)),
     paste0("Erro ao listar fichas do modelo '", modelo_id, "' no projeto '", projeto_id, "'")
   )
 
   if (length(res) == 0) {
-    return(tibble::tibble(ficha_id = character(0), id_app = character(0),
-                          created = character(0), updated = character(0)))
+    return(.talvez(tibble::tibble(ficha_id = character(0), id_app = character(0),
+                          created = character(0), updated = character(0))))
   }
 
   campos <- campos_modelo(modelo_id)
@@ -83,8 +97,8 @@ listar_fichas <- function(projeto_id, modelo_id) {
   }
 
   if (length(linhas) == 0) {
-    return(tibble::tibble(ficha_id = character(0), id_app = character(0),
-                          created = character(0), updated = character(0)))
+    return(.talvez(tibble::tibble(ficha_id = character(0), id_app = character(0),
+                          created = character(0), updated = character(0))))
   }
 
   # Unir todas as colunas presentes
@@ -101,7 +115,7 @@ listar_fichas <- function(projeto_id, modelo_id) {
   })
   names(colunas) <- todas_colunas
 
-  tibble::as_tibble(colunas)
+  .talvez(tibble::as_tibble(colunas))
 }
 
 #' Obter uma ficha especifica
