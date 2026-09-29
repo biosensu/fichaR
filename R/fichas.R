@@ -19,10 +19,21 @@
 #' @importFrom dplyr bind_rows
 #' @export
 listar_fichas <- function(projeto_id, modelo_id, incluir_encontros = FALSE) {
-  .talvez <- function(df) {
+  # A espécie do encontro (achatada em `especie_nc`) é reempacotada como
+  # list(nc, np, grupo) na mesma coluna de espécie das fichas (`col_especie`),
+  # de modo que um único `expandir_especies()` posterior alinhe os dois lados.
+  .talvez <- function(df, col_especie = "especie") {
     if (!isTRUE(incluir_encontros)) return(df)
     encontros <- encontros_ocasionais(projeto_id)
     if (nrow(encontros) == 0) return(df)
+    if (!is.null(col_especie)) {
+      encontros[[col_especie]] <- lapply(seq_len(nrow(encontros)), function(i) {
+        list(nc = encontros$especie_nc[i] %||% NA_character_,
+             np = NA_character_,
+             grupo = encontros$grupo[i] %||% NA_character_)
+      })
+      encontros$especie_nc <- NULL
+    }
     df$tipo_registro <- "Ficha"
     encontros$tipo_registro <- "Encontro Ocasional"
     dplyr::bind_rows(df, encontros)
@@ -45,6 +56,11 @@ listar_fichas <- function(projeto_id, modelo_id, incluir_encontros = FALSE) {
     lapply(seq_len(nrow(campos)), function(i) list(tipo = campos$tipo[i], label = campos$label[i])),
     campos$field_id
   )
+
+  # coluna (label) do campo de espécie do modelo, para alinhar a espécie do
+  # encontro na mesma coluna das fichas; NULL se o modelo não tiver espécie.
+  idx_esp <- which(campos$tipo == "especie")
+  col_especie <- if (length(idx_esp) > 0) campos$label[idx_esp[1]] else NULL
 
   linhas <- list()
 
@@ -98,7 +114,7 @@ listar_fichas <- function(projeto_id, modelo_id, incluir_encontros = FALSE) {
 
   if (length(linhas) == 0) {
     return(.talvez(tibble::tibble(ficha_id = character(0), id_app = character(0),
-                          created = character(0), updated = character(0))))
+                          created = character(0), updated = character(0)), col_especie))
   }
 
   # Unir todas as colunas presentes
@@ -115,7 +131,7 @@ listar_fichas <- function(projeto_id, modelo_id, incluir_encontros = FALSE) {
   })
   names(colunas) <- todas_colunas
 
-  .talvez(tibble::as_tibble(colunas))
+  .talvez(tibble::as_tibble(colunas), col_especie)
 }
 
 #' Obter uma ficha especifica
